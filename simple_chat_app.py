@@ -4,6 +4,7 @@ Main entry point for the application.
 """
 import sys
 import os
+import threading
 
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
@@ -64,7 +65,7 @@ def model_list_component(dialog):
             ui.label(NO_MODELS_FOUND_MSG).classes('p-4')
 
 @ui.page('/')
-async def main():
+def main():
     """Main application page with chat interface."""
     # Add custom CSS to the page
     ui.add_head_html(f'<style>{CHAT_STYLES}</style>')
@@ -83,7 +84,7 @@ async def main():
         models_dialog.open()
         model_list_component.refresh(models_dialog)
     
-    async def send() -> None:
+    def send() -> None:
         """Send a message and get AI response."""
         message_text = input_element.value
         if not message_text or chat_manager.is_thinking:
@@ -94,7 +95,7 @@ async def main():
         chat_manager.is_thinking = True
         chat_manager.message_completed = True
         chat_manager.chat_messages.refresh()
-        await chat_manager.get_ai_response(message_text)
+        threading.Thread(target=chat_manager.get_ai_response, args=(message_text,), daemon=True).start()
     
     # Header with title and model button
     with ui.header().classes('custom-header text-white'):
@@ -110,7 +111,6 @@ async def main():
 
     # Main content area 
     with ui.column().classes(f'w-full max-w-{MAX_WIDTH} {MARGIN_X} {MARGIN_Y}'):
-        await ui.context.client.connected()
         chat_manager.chat_messages()
         ui.timer(UI_REFRESH_INTERVAL, chat_manager.chat_messages.refresh)
 

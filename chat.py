@@ -5,6 +5,7 @@ Handles message management and UI components.
 from datetime import datetime
 from typing import List, Tuple, Dict
 import time
+import threading
 from nicegui import ui
 
 from config import (
