@@ -3,7 +3,7 @@ Model management and configuration for the chat application.
 """
 import ollama
 from qv_ollama_sdk import OllamaChatClient
-from typing import Dict, List
+from typing import Dict, List, Callable
 
 # Default model configuration
 DEFAULT_MODEL = "gemma2:2b"
@@ -47,4 +47,36 @@ class ModelManager:
 
     def get_model_data(self) -> Dict:
         """Get the current model data dictionary."""
-        return self.model_data 
+        return self.model_data
+
+    def delete_model(self, model_name: str) -> bool:
+        """Delete a model from Ollama."""
+        try:
+            ollama.delete(model_name)
+            return True
+        except Exception as e:
+            print(f"Error deleting model: {str(e)}")
+            return False
+
+    def pull_model(self, model_name: str, progress_callback: Callable[[float, str], None]) -> bool:
+        """Pull a model from Ollama with progress tracking."""
+        try:
+            current_digest = ''
+            for progress in ollama.pull(model_name, stream=True):
+                digest = progress.get('digest', '')
+                if digest != current_digest:
+                    current_digest = digest
+                
+                if not digest:
+                    progress_callback(0, progress.get('status', 'Starting...'))
+                    continue
+                
+                if total := progress.get('total'):
+                    completed = progress.get('completed', 0)
+                    progress_value = completed / total if total > 0 else 0
+                    progress_callback(progress_value, f"Pulling {digest[7:19]}")
+            
+            return True
+        except Exception as e:
+            print(f"Error pulling model: {str(e)}")
+            return False 

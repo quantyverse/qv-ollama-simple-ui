@@ -36,8 +36,15 @@ body, input, button, div, span, p, h1, h2, h3, h4, h5, h6, label, textarea {
 
 /* Custom assistant message bubble color */
 .q-message-received .q-message-text {
-    background-color: #3bebff !important;
+    background-color: transparent !important;
     color: white !important;
+}
+
+/* Custom user message bubble color */
+.q-message-sent .q-message-text {
+    background-color: #f5f5f5 !important;
+    color: #000000 !important;
+    border-radius: 2px !important;
 }
 
 /* Make sure markdown content is visible */
