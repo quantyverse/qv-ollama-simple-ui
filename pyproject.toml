@@ -1,10 +1,10 @@
 [project]
-name = "quanty"
+name = "qv_simple_chat_app"
 version = "0.1.0"
-description = "Add your description here"
+description = "Simple chat app using Ollama and NiceGUI"
 readme = "README.md"
-requires-python = ">=3.12"
 dependencies = [
     "nicegui",
-    "qv-ollama-sdk>=0.1.0",
+    "qv-ollama-sdk",
+    "ollama"
 ]

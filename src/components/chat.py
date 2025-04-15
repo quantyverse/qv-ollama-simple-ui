@@ -8,10 +8,10 @@ import time
 import threading
 from nicegui import ui
 
-from config import (
+from src.config.config import (
     USER_ID, AI_ID, STREAMING_DELAY
 )
-from models import ModelManager
+from src.services.models import ModelManager
 
 class ChatManager:
     """Manages chat messages and UI components."""

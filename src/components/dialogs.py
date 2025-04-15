@@ -5,9 +5,9 @@ Handles all dialog-related functionality and UI components.
 from nicegui import ui
 from typing import Callable
 
-from models import ModelManager
-from chat import ChatManager
-from config import (
+from src.services.models import ModelManager
+from src.components.chat import ChatManager
+from src.config.config import (
     MODEL_DIALOG_MIN_WIDTH, MODEL_DIALOG_MAX_WIDTH,
     NO_MODELS_FOUND_MSG, MODEL_SWITCH_SUCCESS_MSG
 )
