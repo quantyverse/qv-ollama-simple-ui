@@ -22,6 +22,9 @@ uv add nicegui ollama qv_ollama_sdk
 3. Run the application:
 ```bash
 python simple_chat_app.py
+
+# using uv
+uv run simple_chat_app.py
 ```
 
 ## Usage
