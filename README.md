@@ -13,15 +13,18 @@ A simple chat interface for interacting with Ollama LLM models. This project ser
 1. Install Ollama: https://ollama.com/
 2. Install Python dependencies (using either pip or uv):
 ```bash
-# Using pip
-pip install nicegui ollama qv_ollama_sdk
+# Using pip (traditional way)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install nicegui ollama qv-ollama-sdk
 
 # Using uv (faster)
-uv add nicegui ollama qv_ollama_sdk
+uv sync
 ```
+
 3. Run the application:
 ```bash
-python simple_chat_app.py
+python simple_chat_app.py #(venv must be activated)
 
 # using uv
 uv run simple_chat_app.py
